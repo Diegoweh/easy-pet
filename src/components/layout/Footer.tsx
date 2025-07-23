@@ -22,7 +22,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 text-white text-lg font-semibold">
             <a
             title="Facebook" 
-            href="https://facebook.com/Easypets" 
+            href="https://www.facebook.com/easypet.mzt/" 
             target="_blank" 
             rel="noopener noreferrer"
             className="flex items-center gap-2 hover:text-blue-400 transition-colors"
@@ -33,7 +33,7 @@ export function Footer() {
             
             <a
             title="Instagram" 
-            href="https://instagram.com/Easypets" 
+            href="https://www.instagram.com/easypet.mzt" 
             target="_blank" 
             rel="noopener noreferrer"
             className="flex items-center gap-2 hover:text-pink-400 transition-colors"
@@ -44,7 +44,8 @@ export function Footer() {
             
             <a
             title="Whatsapp" 
-            href="tel:6692610517" 
+            href="https://wa.link/60be02"
+            target="_blank" 
             className="flex items-center gap-2 hover:text-green-400 transition-colors"
             >
             <MessageCircle className="text-2xl" />

@@ -1,6 +1,7 @@
 'use client'
 
 
+import ReservationForm from "@/components/layout/ReservationForm"
 import { motion } from "framer-motion"
 import { Menu, X, CircleCheckBig } from "lucide-react"
 import { useState } from "react"
@@ -44,7 +45,7 @@ export default function ComingSoonPage() {
 
       {/* Hero section */}
       <section className="bg-[#262a44] min-h-[500px] flex items-center justify-center px-4 py-12">
-        <div className="max-w-7xl w-full flex flex-col-reverse lg:flex-row items-center lg:items-start justify-between gap-8">
+        <div className="max-w-7xl w-full flex flex-col-reverse lg:flex-row items-center lg:items-center justify-between gap-8">
           
           {/* Texto con animación desde la izquierda */}
           <motion.div
@@ -52,6 +53,7 @@ export default function ComingSoonPage() {
             initial={{ opacity: 0, x: -60 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
+            viewport={{ once: true }}
           >
             <h1 style={{ fontFamily: 'Hore' }} className="text-4xl lg:text-5xl font-extrabold leading-tight mt-6">
               Tu mascota <span className="text-pink-400">bien</span> <br />
@@ -76,6 +78,7 @@ export default function ComingSoonPage() {
             initial={{ opacity: 0, x: 60 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+            viewport={{ once: true }}
           >
             <img
               title="Hero img"
@@ -177,20 +180,35 @@ export default function ComingSoonPage() {
       <section id="cover" className="bg-[#262a44] min-h-[500px] flex items-center justify-center px-4 py-12">
         <div className="max-w-7xl w-full flex flex-col-reverse lg:flex-row items-center lg:items-start justify-between gap-8">
           
-          {/* Texto */}
-          <div className="w-full lg:w-1/2 text-white text-center lg:text-left">
-            <h1 style={{ fontFamily: 'Hore' }} className="text-4xl lg:text-5xl font-extrabold leading-tight mt-6">
+          {/* Texto animado */}
+          <motion.div
+            className="w-full lg:w-1/2 text-white text-center lg:text-left"
+            initial={{ opacity: 0, x: -60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            viewport={{ once: true }}
+          >
+            <h1
+              style={{ fontFamily: 'Hore' }}
+              className="text-4xl lg:text-5xl font-extrabold leading-tight mt-6"
+            >
               ¡Servicio a <span className="text-pink-400">la puerta</span> <br />
               de tu casa!<br />
               <span className="text-white">¿No estás en la zona?</span> <br />
               <span className="text-white text-2xl">¡Contáctanos para excepciones!</span>
             </h1>
-          </div>
+          </motion.div>
 
-          {/* Mapa en lugar de imagen */}
-          <div className="w-full lg:w-1/2 h-[300px] sm:h-[400px] lg:h-[500px] rounded-xl overflow-hidden shadow-lg img-animation">
+          {/* Mapa animado */}
+          <motion.div
+            className="w-full lg:w-1/2 h-[300px] sm:h-[400px] lg:h-[500px] rounded-xl overflow-hidden shadow-lg"
+            initial={{ opacity: 0, x: 60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+            viewport={{ once: true }}
+          >
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2020.3259283400287!2d-106.42484420041754!3d23.207839121179465!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2smx!4v1752619849851!5m2!1ses!2smx" // Reemplaza con tu URL real de embed
+              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2020.3259283400287!2d-106.42484420041754!3d23.207839121179465!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2smx!4v1752619849851!5m2!1ses!2smx"
               width="100%"
               height="100%"
               style={{ border: 0 }}
@@ -198,7 +216,7 @@ export default function ComingSoonPage() {
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
-          </div>
+          </motion.div>
 
         </div>
       </section>
@@ -218,129 +236,7 @@ export default function ComingSoonPage() {
       </div> */}
 
       {/* Formulario de reservación */}
-      <section id="reserva" className="bg-[#E072A4] px-4 py-16 flex justify-center items-center">
-        <div className="w-full max-w-3xl bg-white rounded-2xl shadow-xl p-8 text-[#262a44]">
-          <h2 className="text-3xl font-bold text-center mb-6" style={{ fontFamily: 'Hore' }}>
-            🐾 Llena tu información para agendar
-          </h2>
-          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-  
-          {/* Nombre del dueño */}
-          <div>
-            <label htmlFor="nombreDuenio" className="block font-semibold mb-2">Nombre del dueño</label>
-            <input
-              required
-              id="nombreDuenio"
-              type="text"
-              value={nombreDuenio}
-              onChange={(e) => setNombreDuenio(e.target.value)}
-              placeholder="Juan Pérez"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
-            />
-          </div>
-
-          {/* Nombre de la mascota */}
-          <div>
-            <label htmlFor="nombreMascota" className="block font-semibold mb-2">Nombre de la mascota</label>
-            <input
-              required
-              id="nombreMascota"
-              type="text"
-              value={nombreMascota}
-              onChange={(e) => setNombreMascota(e.target.value)}
-              placeholder="Firulais"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
-            />
-          </div>
-
-          {/* Tipo de mascota */}
-          <div>
-            <label htmlFor="tipoMascota" className="block font-semibold mb-2">Tipo de mascota</label>
-            <input
-              required
-              id="tipoMascota"
-              type="text"
-              value={tipoMascota}
-              onChange={(e) => setTipoMascota(e.target.value)}
-              placeholder="Perro, gato, etc."
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
-            />
-          </div>
-
-          {/* Raza */}
-          <div>
-            <label htmlFor="razaMascota" className="block font-semibold mb-2">Raza de la mascota</label>
-            <input
-              required
-              id="razaMascota"
-              type="text"
-              value={razaMascota}
-              onChange={(e) => setRazaMascota(e.target.value)}
-              placeholder="Labrador, persa, etc."
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
-            />
-          </div>
-
-          {/* Tamaño */}
-          <div>
-            <label htmlFor="tamanoMascota" className="block font-semibold mb-2">Tamaño de la mascota</label>
-            <select
-              required
-              id="tamanoMascota"
-              value={tamanoMascota}
-              onChange={(e) => setTamanoMascota(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
-            >
-              <option value="">Selecciona tamaño</option>
-              <option value="chico">Chico</option>
-              <option value="mediano">Mediano</option>
-              <option value="grande">Grande</option>
-            </select>
-          </div>
-
-          {/* Teléfono */}
-          <div>
-            <label htmlFor="telefono" className="block font-semibold mb-2">Número de celular</label>
-            <input
-              required
-              id="telefono"
-              type="tel"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              maxLength={10}
-              value={telefono}
-              onChange={(e) => setTelefono(e.target.value)}
-              placeholder="Ej. 6691234567"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
-            />
-          </div>
-
-          {/* Domicilio */}
-          <div className="md:col-span-2">
-            <label htmlFor="domicilio" className="block font-semibold mb-2">Domicilio</label>
-            <textarea
-              id="domicilio"
-              value={domicilio}
-              onChange={(e) => setDomicilio(e.target.value)}
-              placeholder="Calle, número, colonia, referencias..."
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
-              rows={3}
-            ></textarea>
-          </div>
-
-          {/* Botón */}
-          <div className="md:col-span-2 text-center mt-4">
-            <button
-              type="submit"
-              className="bg-[#E072A4] text-white font-bold px-10 py-3 rounded-full text-lg hover:bg-pink-600 transition"
-            >
-              Enviar solicitud
-            </button>
-          </div>
-        </form>
-
-        </div>
-      </section>
+      <ReservationForm />
 
 
     </div>

@@ -16,7 +16,7 @@ export function Navbar() {
     <nav className="bg-white border-b border-gray-200 px-4 sm:px-7 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo */}
-          <Link href="#" title="home" className="flex items-center space-x-2">            
+          <Link href="/" title="home" className="flex items-center space-x-2">            
             <img
               title="Logo"
               src="/assets/img/easyPetsLogo.png"
@@ -40,7 +40,7 @@ export function Navbar() {
             {/* <Link href="/" className="text-gray-700 hover:text-blue-700 font-semibold transition-colors">
               Inicio
             </Link> */}
-            <Link href="#services" title="servicios" className="text-gray-700 hover:text-blue-700 font-semibold transition-colors">
+            <Link href="/servicios" title="servicios" className="text-gray-700 hover:text-blue-700 font-semibold transition-colors">
               Servicios
             </Link>
             <Link href="#cover" title="Cobertura" className="text-gray-700 hover:text-blue-700 font-semibold transition-colors">
@@ -64,7 +64,7 @@ export function Navbar() {
                 Inicio
               </Link> */}
               <Link 
-                href="#services" 
+                href="/servicios" 
                 className="text-gray-700 hover:text-blue-700 font-semibold transition-colors py-2"
                 onClick={toggleMenu}
               >
