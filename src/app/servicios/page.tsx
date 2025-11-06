@@ -46,7 +46,7 @@ const extraServices = [
     prices: ["$40.00 ", "$50.00 ", "$60.00 ", "$70.00 "]
   },
   {
-    name: "Sampoo Antipulgas",
+    name: "Shampoo Antipulgas",
     price: "Venta por unidad $40.00"
   },
   {
