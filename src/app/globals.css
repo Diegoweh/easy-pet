@@ -4,65 +4,116 @@
 /* Fonts */
 @font-face {
   font-family: 'Hore';
-  src: url('/assets/fonts/Hore.woff') format('truetype');
+  src: url('/assets/fonts/Hore.woff') format('woff'),
+       url('/assets/fonts/Hore.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
-/* Animations */
-/* Animaciones iniciales (on load) */
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
+/* Design tokens */
+@theme inline {
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Hore', var(--font-body), ui-sans-serif, sans-serif;
+
+  --color-ink: #262a44;
+  --color-ink-deep: #1d2240;
+  --color-ink-soft: #5d6180;
+  --color-blush: #e072a4;
+  --color-blush-deep: #cf5890;
+  --color-blush-soft: #fbe4ee;
+  --color-cream: #fbf6f0;
+  --color-sand: #f1e9df;
+  --color-sky: #4fc3ec;
+  --color-sun: #ffd24a;
+
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-slow: float 9s ease-in-out infinite;
+  --animate-spin-slow: spin 28s linear infinite;
+}
+
+@keyframes marquee {
   to {
-    opacity: 1;
-    transform: translateX(0);
+    transform: translateX(-50%);
   }
 }
 
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(50px);
+@keyframes float {
+  0%, 100% {
+    translate: 0 0;
   }
-  to {
-    opacity: 1;
-    transform: translateX(0);
+  50% {
+    translate: 0 -10px;
   }
 }
 
-/* Tus animaciones existentes para scroll */
-@keyframes show {
-  from {
-    opacity: 0;
-    scale: 25%;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
   }
-  to {
-    opacity: 1;
-    scale: 100%;
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+
+  ::selection {
+    background-color: var(--color-blush);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-blush-deep);
+    outline-offset: 3px;
   }
 }
 
-/* Clases para animaciones iniciales */
-.animate-left {
-  animation: slideInLeft 0.8s ease-out forwards;
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 font-display text-lg leading-none
+      transition-[transform,background-color,box-shadow,color] duration-300 ease-out-expo
+      hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97];
+  }
+
+  .btn-primary {
+    @apply bg-blush text-ink shadow-[0_10px_30px_-10px_rgba(224,114,164,0.9)]
+      hover:bg-blush-deep hover:shadow-[0_16px_36px_-10px_rgba(224,114,164,0.9)];
+  }
+
+  .btn-dark {
+    @apply bg-ink text-cream shadow-[0_10px_30px_-12px_rgba(38,42,68,0.8)] hover:bg-ink-deep;
+  }
+
+  .btn-outline {
+    @apply border-2 border-ink/15 text-ink hover:border-ink hover:bg-ink hover:text-cream;
+  }
+
+  .btn-outline-light {
+    @apply border-2 border-cream/25 text-cream hover:border-cream hover:bg-cream hover:text-ink;
+  }
+
+  .field {
+    @apply w-full rounded-2xl border-2 border-transparent bg-white px-4 py-3.5 text-ink
+      placeholder:text-ink-soft/60 transition-[border-color,box-shadow] duration-200
+      hover:border-ink/25 focus:border-ink focus:outline-none
+      focus:shadow-[0_0_0_4px_rgba(38,42,68,0.15)];
+  }
 }
 
-.animate-right {
-  animation: slideInRight 0.8s ease-out forwards;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-marquee,
+  .animate-float,
+  .animate-float-slow,
+  .animate-spin-slow {
+    animation: none;
+  }
 }
-
-/* Tus clases existentes para scroll */
-.img-animation {
-  view-timeline-name: --image;
-  view-timeline-axis: block;
-  animation-timeline: --image;
-  animation-name: show;
-  animation-range: entry 2% cover 45%;
-}
-
-
-
-

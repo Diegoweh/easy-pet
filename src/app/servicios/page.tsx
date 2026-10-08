@@ -1,8 +1,9 @@
 'use client'
+import Coverage from '@/components/layout/Coverage'
 import ReservationForm from '@/components/layout/ReservationForm'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { EASE, Reveal, Stagger, StaggerItem } from '@/components/motion/Reveal'
 import { motion } from 'framer-motion'
-import { Badge, Scissors, Section } from 'lucide-react'
+import { Check, PawPrint, Scissors } from 'lucide-react'
 import React from 'react'
 
 const bathServices = [
@@ -59,328 +60,210 @@ const extraServices = [
   }
 ];
 
+const heroLines = [
+  <>Dale a tu peludo</>,
+  <><span className="text-cream">lo mejor</span> con nuestros</>,
+  <>servicios únicos</>,
+]
+
+const hairPricing = [
+  {
+    title: "Pelo corto",
+    rows: shortHairPricing,
+    dot: "bg-sky",
+  },
+  {
+    title: "Pelo largo",
+    rows: longHairPricing,
+    dot: "bg-blush",
+  },
+]
+
 const page = () => {
   return (
     <>
-    <section className="bg-pink-400 min-h-[500px] flex items-center justify-center px-4 py-8 lg:py-16">
-        <div className="max-w-7xl w-full flex flex-col-reverse lg:flex-row items-center lg:items-center justify-between gap-8">
-          
-          {/* Texto con animación desde la izquierda */}
+    <section className="relative -mt-24 overflow-hidden bg-blush px-4 pt-36 sm:px-6 lg:pt-24">
+        <div aria-hidden className="absolute -left-24 -top-24 size-80 rounded-full bg-cream/25 blur-3xl" />
+        <div className="relative mx-auto max-w-7xl">
           <motion.div
-            className="w-full lg:w-1/2 text-white text-center lg:text-center"
-            initial={{ opacity: 0, x: -60 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            viewport={{ once: true }}
-          >
-            <h1 style={{ fontFamily: 'Hore' }} className="text-4xl lg:text-5xl font-extrabold leading-tight ">
-              Dale a tus peludo <span className="text-[#262a44]">lo mejor</span> <br />
-              con nuestros <br />
-              <span className="text-white">servicios únicos</span>
-            </h1>
+            aria-hidden
+            className="absolute right-[2%] top-[14%] hidden size-20 rounded-full bg-sun lg:block"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 180, damping: 12, delay: 0.8 }}
+          />
 
-            {/* <div className="mt-6">
-              <a
-                href="#reserva"
-                className="inline-flex items-center bg-pink-400 text-[#262a44] font-bold px-8 py-3 rounded-full text-lg shadow-md hover:bg-pink-300 transition"
-                style={{ fontFamily: 'Hore' }}
+          <div className="relative grid items-center gap-8 lg:grid-cols-2">
+
+            {/* Texto */}
+            <div className="text-center lg:py-20 lg:text-left">
+              <motion.span
+                className="inline-flex items-center gap-2 rounded-full bg-ink/10 px-4 py-2 text-sm font-bold uppercase tracking-widest text-ink"
+                initial={{ opacity: 0, y: 16, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.7, ease: EASE, delay: 0.1 }}
               >
-                <span className="mr-2">🐾</span> ¡Reserva fácil!
-              </a>
-            </div> */}
-          </motion.div>
+                <PawPrint className="size-4" /> Servicios
+              </motion.span>
 
-          {/* Imagen con animación desde la derecha */}
-          <motion.div
-            className="w-full lg:w-1/2 flex justify-center"
-            initial={{ opacity: 0, x: 60 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <img
-              title="Hero img"
-              src="/assets/img/heroServices.webp"
-              alt="Hero img"
-              className="w-auto max-w-xs sm:max-w-sm md:max-w-md lg:max-w-xl xl:max-w-xl h-auto object-contain"
-            />
-          </motion.div>
+              <h1 className="mt-6 font-display text-[clamp(2.25rem,6vw,4.25rem)] leading-[1.02] text-ink">
+                {heroLines.map((line, index) => (
+                  <span key={index} className="block overflow-hidden pb-[0.12em]">
+                    <motion.span
+                      className="block"
+                      initial={{ y: "115%", rotate: 4 }}
+                      animate={{ y: 0, rotate: 0 }}
+                      transition={{ duration: 1, ease: EASE, delay: 0.2 + index * 0.12 }}
+                      style={{ transformOrigin: "left bottom" }}
+                    >
+                      {line}
+                    </motion.span>
+                  </span>
+                ))}
+              </h1>
 
+              <motion.div
+                className="mt-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: EASE, delay: 0.7 }}
+              >
+                <a href="#reserva" className="btn btn-dark group">
+                  <PawPrint className="size-5 transition-transform duration-300 ease-out-expo group-hover:-rotate-12 group-hover:scale-110" />
+                  ¡Reserva fácil!
+                </a>
+              </motion.div>
+            </div>
+
+            {/* Imagen */}
+            <motion.div
+              className="flex justify-center self-end"
+              initial={{ opacity: 0, y: 80 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.1, ease: EASE, delay: 0.35 }}
+            >
+              <img
+                title="Hero img"
+                src="/assets/img/heroServices.webp"
+                alt="Dos perritos recién arreglados"
+                className="h-auto w-full max-w-md object-contain lg:max-w-xl"
+              />
+            </motion.div>
+
+          </div>
         </div>
     </section>
 
     {/* Services */}
-    <section className="bg-white px-4 py-12 max-w-7xl mx-auto">
+    <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:py-28">
 
         {/* Main Service - Baño Completo */}
-        <Card className="mb-12 border-0 border-blue-200 bg-gradient-to-r from-blue-50 to-white">
-            <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                viewport={{ once: true }}
-            >
-                <CardHeader className="text-center pb-6">
-                <CardTitle
-                    style={{ fontFamily: "Hore" }}
-                    className="text-3xl font-bold text-[#262a44] mb-4"
-                >
-                   🐾 Baño Completo
-                </CardTitle>
-                <CardDescription
-                    style={{ fontFamily: "Hore" }}
-                    className="text-lg text-gray-700 max-w-4xl mx-auto"
-                >
-                    {bathServices.join(" | ")}
-                </CardDescription>
-                </CardHeader>
-            </motion.div>
+        <Reveal className="text-center">
+          <span className="text-sm font-bold uppercase tracking-widest text-blush-deep">Servicio principal</span>
+          <h2 className="mt-2 font-display text-4xl leading-none text-ink sm:text-6xl">Baño Completo</h2>
+        </Reveal>
 
-            <CardContent>
-                <div className="grid md:grid-cols-2 gap-8">
-                {/* Pelo Corto */}
-                <motion.div
-                    className="bg-blue-900 text-white rounded-lg p-6"
-                    initial={{ opacity: 0, x: -60 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    viewport={{ once: true }}
-                >
-                    <h3
-                    style={{ fontFamily: "Hore" }}
-                    className="text-2xl font-bold text-center mb-6 bg-blue-400 py-3 rounded-lg"
-                    >
-                    🐾 PELO CORTO
-                    </h3>
-                    <div className="space-y-4">
-                    {shortHairPricing.map((item, index) => (
-                        <div
-                        key={index}
-                        className="flex justify-between items-center py-2 border-b border-blue-400"
-                        >
-                        <span className="font-semibold text-lg">{item.size}</span>
-                        <span className="font-bold text-xl">{item.price}</span>
-                        </div>
-                    ))}
-                    </div>
-                </motion.div>
+        <Stagger stagger={0.06} className="mx-auto mt-8 flex max-w-3xl flex-wrap justify-center gap-x-7 gap-y-3">
+          {bathServices.map((service) => (
+            <StaggerItem key={service}>
+              <span className="inline-flex items-center gap-2 font-semibold text-ink">
+                <Check className="size-4 text-blush-deep" strokeWidth={3} />
+                {service}
+              </span>
+            </StaggerItem>
+          ))}
+        </Stagger>
 
-                {/* Pelo Largo */}
-                <motion.div
-                    className="bg-pink-400 text-white rounded-lg p-6"
-                    initial={{ opacity: 0, x: 60 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-                    viewport={{ once: true }}
-                >
-                    <h3
-                    style={{ fontFamily: "Hore" }}
-                    className="text-2xl font-bold text-center mb-6 bg-pink-500 py-3 rounded-lg"
-                    >
-                    🐾 PELO LARGO
-                    </h3>
-                    <div className="space-y-4">
-                    {longHairPricing.map((item, index) => (
-                        <div
-                        key={index}
-                        className="flex justify-between items-center py-2 border-b border-pink-200"
-                        >
-                        <span className="font-semibold text-lg">{item.size}</span>
-                        <span className="font-bold text-xl">{item.price}</span>
-                        </div>
-                    ))}
-                    </div>
-                </motion.div>
-                </div>
-            </CardContent>
-        </Card>
+        <Stagger stagger={0.15} className="mt-16 grid gap-14 md:grid-cols-2 md:gap-0 md:divide-x md:divide-ink/15">
+          {hairPricing.map((group) => (
+            <StaggerItem key={group.title} className="md:px-12 md:first:pl-0 md:last:pr-0">
+              <h3 className="flex items-center gap-3 font-display text-3xl text-ink sm:text-4xl">
+                <span className={`size-3.5 rounded-full ${group.dot}`} />
+                {group.title}
+              </h3>
+              <div className="mt-4">
+                {group.rows.map((item, index) => (
+                  <div key={index} className="group flex items-baseline gap-4 py-3.5 text-ink">
+                    <span className="w-10 font-display text-xl">{item.size}</span>
+                    <span aria-hidden className="flex-1 -translate-y-1 border-b-2 border-dotted border-ink/20 transition-colors duration-300 group-hover:border-blush" />
+                    <span className="text-2xl font-extrabold tabular-nums transition-colors duration-300 group-hover:text-blush-deep">{item.price}</span>
+                  </div>
+                ))}
+              </div>
+            </StaggerItem>
+          ))}
+        </Stagger>
 
         {/* Doble Capa de Pelo */}
-        <Card className="mb-8 border-0 border-blue-300 bg-blue-900 text-white">
-            <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                viewport={{ once: true }}
-            >
-                <CardHeader className="text-center">
-                <CardTitle
-                    style={{ fontFamily: "Hore" }}
-                    className="text-2xl font-bold bg-blue-400 py-3 px-6 rounded-lg inline-block"
-                >
-                    🐾 DOBLE CAPA DE PELO O MÁS
-                </CardTitle>
-                </CardHeader>
-            </motion.div>
+        <Reveal className="mt-16 border-t-2 border-ink pt-10">
+          <div className="flex flex-col items-center justify-between gap-4 text-center lg:flex-row lg:text-left">
+            <h3 className="font-display text-2xl text-ink sm:text-3xl">Doble capa de pelo o más</h3>
+            <div className="inline-flex items-center gap-2 rounded-full bg-sun/40 px-5 py-2.5 text-sm font-bold text-ink sm:text-base">
+              <Scissors className="size-4 shrink-0" />
+              CORTE DE RAZA PERSONALIZADA $75.00
+            </div>
+          </div>
 
-            <CardContent>
-                <motion.div
-                className="grid grid-cols-2 md:grid-cols-4 gap-4"
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-                viewport={{ once: true }}
-                >
-                {doubleCoatPricing.map((item, index) => (
-                    <div key={index} className="text-center py-3">
-                    <div className="font-semibold text-lg mb-1">{item.size}</div>
-                    <div className="font-bold text-xl">{item.price}</div>
-                    </div>
-                ))}
-                </motion.div>
-
-                <motion.div
-                className="text-center mt-6 pt-6 border-t border-blue-400"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
-                viewport={{ once: true }}
-                >
-                <div className="inline-flex items-center text-lg px-6 py-2 bg-blue-800 text-white rounded-full font-semibold">
-                    <Scissors className="w-5 h-5 mr-2" />
-                    CORTE DE RAZA PERSONALIZADA $75.00
-                </div>
-                </motion.div>
-            </CardContent>
-        </Card>
+          <Stagger stagger={0.08} className="mt-10 grid grid-cols-2 gap-y-8 md:grid-cols-4 md:divide-x md:divide-ink/15">
+            {doubleCoatPricing.map((item, index) => (
+              <StaggerItem key={index} className="text-center">
+                <div className="font-display text-xl text-ink-soft">{item.size}</div>
+                <div className="mt-1 text-2xl font-extrabold tabular-nums text-ink">{item.price}</div>
+              </StaggerItem>
+            ))}
+          </Stagger>
+        </Reveal>
 
         {/* Servicios Extras */}
-        <Card className="border-0 border-blue-200">
-            <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                viewport={{ once: true }}
-            >
-                <CardHeader className="text-center bg-blue-900 text-white">
-                <CardTitle
-                    style={{ fontFamily: "Hore" }}
-                    className="text-3xl font-bold"
-                >
-                    Servicios Extras
-                </CardTitle>
-                </CardHeader>
-            </motion.div>
+        <Reveal className="mt-20 text-center">
+          <span className="text-sm font-bold uppercase tracking-widest text-blush-deep">Complementa</span>
+          <h2 className="mt-2 font-display text-4xl leading-none text-ink sm:text-5xl">Servicios Extras</h2>
+        </Reveal>
 
-            <CardContent className="p-0">
-                <motion.div
-                className="overflow-x-auto"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-                viewport={{ once: true }}
-                >
-                <table className="w-full">
-                    <thead>
-                    <tr className="bg-blue-100">
-                        <th className="text-left py-4 px-6 font-bold text-gray-800 border-r">
-                        Servicio
-                        </th>
-                        <th className="text-center py-4 px-4 font-bold text-[#262a44] border-r">
-                        CH
-                        </th>
-                        <th className="text-center py-4 px-4 font-bold text-[#262a44] border-r">
-                        M
-                        </th>
-                        <th className="text-center py-4 px-4 font-bold text-[#262a44] border-r">
-                        G
-                        </th>
-                        <th className="text-center py-4 px-4 font-bold text-[#262a44]">
-                        XL
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {extraServices.map((service, index) => (
-                        <tr key={index} className="border-b hover:bg-blue-50">
-                        <td className="py-4 px-6 font-semibold text-gray-800 border-r">
-                            {service.name}
+        <Reveal delay={0.1} className="mt-10">
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[560px]">
+              <thead>
+                <tr className="border-b-2 border-ink text-ink">
+                  <th className="px-6 py-5 text-left font-display text-lg font-normal sm:px-8">Servicio</th>
+                  {["CH", "M", "G", "XL"].map((size) => (
+                    <th key={size} className="px-4 py-5 text-center font-display text-lg font-normal">{size}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {extraServices.map((service, index) => (
+                  <tr key={index} className="border-b border-ink/10 transition-colors duration-300 last:border-b-0 hover:bg-blush-soft/60">
+                    <td className="px-6 py-5 font-bold text-ink sm:px-8">
+                      {service.name}
+                    </td>
+                    {Array.isArray(service.prices) ? (
+                      service.prices.map((price, idx) => (
+                        <td key={idx} className="px-4 py-5 text-center font-bold tabular-nums text-ink">
+                          {price}
                         </td>
-                        {Array.isArray(service.prices) ? (
-                            service.prices.map((price, idx) => (
-                            <td
-                                key={idx}
-                                className="py-4 px-4 text-center font-bold text-[#262a44] border-r last:border-r-0"
-                            >
-                                {price}
-                            </td>
-                            ))
-                        ) : service.prices ? (
-                            <td
-                            colSpan={4}
-                            className="py-4 px-4 text-center font-bold text-[#262a44]"
-                            >
-                            {service.prices}
-                            </td>
-                        ) : (
-                            <td
-                            colSpan={4}
-                            className="py-4 px-4 text-center font-bold text-[#262a44]"
-                            >
-                            {service.price}
-                            </td>
-                        )}
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
-                </motion.div>
-            </CardContent>
-        </Card>
+                      ))
+                    ) : (
+                      <td colSpan={4} className="px-4 py-5 text-center font-semibold text-ink-soft">
+                        {service.price}
+                      </td>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Reveal>
 
     </section>
 
     {/* Cover section */}
-      <section id="cover" className="bg-[#262a44] min-h-[500px] flex items-center justify-center px-4 py-12">
-        <div className="max-w-7xl w-full flex flex-col-reverse lg:flex-row items-center lg:items-start justify-between gap-8">
-            
-            {/* Texto animado */}
-            <motion.div
-            className="w-full lg:w-1/2 text-white text-center lg:text-left"
-            initial={{ opacity: 0, x: -60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            viewport={{ once: true }}
-            >
-            <h1
-                style={{ fontFamily: 'Hore' }}
-                className="text-4xl lg:text-5xl font-extrabold leading-tight mt-6"
-            >
-                ¡Servicio a <span className="text-pink-400">la puerta</span> <br />
-                de tu casa!<br />
-                <span className="text-white">¿No estás en la zona?</span> <br />
-                <span className="text-white text-2xl">¡Contáctanos para excepciones!</span>
-            </h1>
-            </motion.div>
-
-            {/* Mapa animado */}
-            <motion.div
-            className="w-full lg:w-1/2 h-[300px] sm:h-[400px] lg:h-[500px] rounded-xl overflow-hidden shadow-lg"
-            initial={{ opacity: 0, x: 60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            viewport={{ once: true }}
-            >
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2020.3259283400287!2d-106.42484420041754!3d23.207839121179465!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2smx!4v1752619849851!5m2!1ses!2smx"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen={true}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
-            </motion.div>
-
-        </div>
-      </section>
+    <Coverage />
 
     {/* Formulario de reservación */}
-      <ReservationForm />   
+    <ReservationForm />
 
-
-
-    </>   
+    </>
   )
 }
 

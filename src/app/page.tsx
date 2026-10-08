@@ -1,243 +1,269 @@
 'use client'
 
-
+import Coverage from "@/components/layout/Coverage"
 import ReservationForm from "@/components/layout/ReservationForm"
-import { motion } from "framer-motion"
-import { Menu, X, CircleCheckBig } from "lucide-react"
-import { useState } from "react"
+import { EASE, Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal"
+import { motion, useScroll, useTransform } from "framer-motion"
+import { ArrowRight, ArrowUpRight, Award, HeartHandshake, Home, Leaf, PawPrint, Sparkles } from "lucide-react"
+import Link from "next/link"
+import { useRef } from "react"
+
+const heroLines = [
+  <>Tu mascota</>,
+  <><span className="text-blush">bien</span> arreglada</>,
+  <>sobre ruedas</>,
+]
+
+const benefits = [
+  { Icon: Home, title: "Servicio a domicilio", text: "Sin traslados ni esperas." },
+  { Icon: Leaf, title: "Productos naturales", text: "100% seguros para tu mascota." },
+  { Icon: Award, title: "Estilistas certificados", text: "Y con experiencia." },
+  { Icon: HeartHandshake, title: "Atención personalizada", text: "Para cada raza." },
+]
+
+const services = [
+  { title: <>Baño <br /> premium</>, alt: "Baño Premium", img: "/assets/img/gall1.webp" },
+  { title: <>Limpieza <br /> y cuidado</>, alt: "Limpieza y Cuidado", img: "/assets/img/gall2.webp" },
+  { title: <>Corte y <br /> desenredo</>, alt: "Corte y desenredo", img: "/assets/img/gall3.webp" },
+  { title: <>Tratamientos <br /> especiales</>, alt: "Tratamientos especiales", img: "/assets/img/gall4.webp" },
+]
+
+const marqueeItems = ["Baño premium", "Limpieza y cuidado", "Corte y desenredo", "Tratamientos especiales", "A domicilio"]
 
 export default function ComingSoonPage() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen)
-  }
-
-  // Estados para los campos del formulario
-  const [nombreDuenio, setNombreDuenio] = useState("");
-  const [nombreMascota, setNombreMascota] = useState("");
-  const [tipoMascota, setTipoMascota] = useState("");
-  const [razaMascota, setRazaMascota] = useState("");
-  const [tamanoMascota, setTamanoMascota] = useState("");
-  const [telefono, setTelefono] = useState("");
-  const [domicilio, setDomicilio] = useState("");
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-
-  const mensaje = `¡Hola! Quiero agendar un servicio a domicilio. Aquí están mis datos:
-
-  *Nombre del dueño:* ${nombreDuenio}
-  *Nombre de la mascota:* ${nombreMascota}
-  *Tipo de mascota:* ${tipoMascota}
-  *Raza:* ${razaMascota}
-  *Tamaño:* ${tamanoMascota}
-  *Domicilio:* ${domicilio}
-  *Celular:* ${telefono}`;
-
-    const numeroWhatsApp = "526692610517"; // <- Cambia esto por tu número real
-    const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
-    window.open(url, "_blank");
-  }
+  const heroRef = useRef<HTMLElement>(null)
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] })
+  const dogsY = useTransform(scrollYProgress, [0, 1], [0, 80])
+  const archY = useTransform(scrollYProgress, [0, 1], [0, -40])
+  const decoY = useTransform(scrollYProgress, [0, 1], [0, -120])
 
   return (
-    <div className="min-h-screen">     
+    <div className="min-h-screen overflow-x-clip">
 
       {/* Hero section */}
-      <section className="bg-[#262a44] min-h-[500px] flex items-center justify-center px-4 py-12">
-        <div className="max-w-7xl w-full flex flex-col-reverse lg:flex-row items-center lg:items-center justify-between gap-8">
-          
-          {/* Texto con animación desde la izquierda */}
-          <motion.div
-            className="w-full lg:w-1/2 text-white text-center lg:text-center"
-            initial={{ opacity: 0, x: -60 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            viewport={{ once: true }}
-          >
-            <h1 style={{ fontFamily: 'Hore' }} className="text-4xl lg:text-5xl font-extrabold leading-tight mt-6">
-              Tu mascota <span className="text-pink-400">bien</span> <br />
-              arreglada <br />
-              <span className="text-white">sobre ruedas</span>
+      <section ref={heroRef} className="relative px-4 pb-16 pt-10 sm:px-6 lg:pb-24 lg:pt-16">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-8">
+
+          {/* Texto */}
+          <div className="text-center lg:text-left">
+            <motion.span
+              className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold uppercase tracking-widest text-ink shadow-sm"
+              initial={{ opacity: 0, y: 16, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.7, ease: EASE, delay: 0.1 }}
+            >
+              <Sparkles className="size-4 text-blush" /> Grooming móvil
+            </motion.span>
+
+            <h1 className="mt-6 font-display text-[clamp(2.75rem,8vw,5.5rem)] leading-[0.98] text-ink">
+              {heroLines.map((line, index) => (
+                <span key={index} className="block overflow-hidden pb-[0.12em]">
+                  <motion.span
+                    className="block"
+                    initial={{ y: "115%", rotate: 4 }}
+                    animate={{ y: 0, rotate: 0 }}
+                    transition={{ duration: 1, ease: EASE, delay: 0.2 + index * 0.12 }}
+                    style={{ transformOrigin: "left bottom" }}
+                  >
+                    {line}
+                  </motion.span>
+                </span>
+              ))}
             </h1>
 
-            <div className="mt-6">
-              <a
-                href="#reserva"
-                className="inline-flex items-center bg-pink-400 text-[#262a44] font-bold px-8 py-3 rounded-full text-lg shadow-md hover:bg-pink-300 transition"
-                style={{ fontFamily: 'Hore' }}
-              >
-                <span className="mr-2">🐾</span> ¡Reserva fácil!
-              </a>
-            </div>
-          </motion.div>
+            <motion.p
+              className="mx-auto mt-6 max-w-md text-lg text-ink-soft lg:mx-0"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: EASE, delay: 0.65 }}
+            >
+              Servicio a domicilio, estilistas certificados y atención personalizada. Fácil, rápido y sin estrés.
+            </motion.p>
 
-          {/* Imagen con animación desde la derecha */}
-          <motion.div
-            className="w-full lg:w-1/2 flex justify-center"
-            initial={{ opacity: 0, x: 60 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <img
-              title="Hero img"
-              src="/assets/img/heroDog.webp"
-              alt="Hero img"
-              className="w-auto max-w-xs sm:max-w-sm md:max-w-md lg:max-w-xl xl:max-w-2xl h-auto object-contain"
-            />
-          </motion.div>
+            <motion.div
+              className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: EASE, delay: 0.8 }}
+            >
+              <a href="#reserva" className="btn btn-primary group w-full sm:w-auto">
+                <PawPrint className="size-5 transition-transform duration-300 ease-out-expo group-hover:-rotate-12 group-hover:scale-110" />
+                ¡Reserva fácil!
+              </a>
+              <Link href="/servicios" className="btn btn-outline group w-full sm:w-auto">
+                Ver servicios
+                <ArrowRight className="size-5 transition-transform duration-300 ease-out-expo group-hover:translate-x-1.5" />
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* Imagen */}
+          <div className="relative mx-auto aspect-[5/4] w-full max-w-2xl">
+            {/* Arco */}
+            <motion.div style={{ y: archY }} className="absolute inset-x-[10%] bottom-[9%] top-0">
+              <motion.div
+                className="size-full origin-bottom rounded-b-[3rem] rounded-t-full bg-blush"
+                initial={{ scaleY: 0, opacity: 0 }}
+                animate={{ scaleY: 1, opacity: 1 }}
+                transition={{ duration: 1.1, ease: EASE, delay: 0.25 }}
+              />
+            </motion.div>
+
+            {/* Decoración */}
+            <motion.div style={{ y: decoY }} className="absolute right-[2%] top-[6%]">
+              <motion.div
+                className="size-16 rounded-full bg-sun sm:size-20"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 180, damping: 12, delay: 0.9 }}
+              />
+            </motion.div>
+            <motion.div style={{ y: decoY }} className="absolute left-[3%] top-[30%]">
+              <motion.div
+                className="size-7 rounded-full bg-sky sm:size-9"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 180, damping: 12, delay: 1.05 }}
+              />
+            </motion.div>
+
+            {/* Mascotas */}
+            <motion.div style={{ y: dogsY }} className="absolute inset-0">
+              <motion.img
+                title="Hero img"
+                src="/assets/img/heroDog.webp"
+                alt="Tres perritos envueltos en toallas después de su baño"
+                fetchPriority="high"
+                className="absolute left-[-17.5%] top-[6%] w-[130%] max-w-none select-none [mask-image:linear-gradient(to_right,transparent_9%,black_17%,black_87%,transparent_94%)]"
+                draggable={false}
+                initial={{ opacity: 0, y: 60, scale: 0.94 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 1.1, ease: EASE, delay: 0.45 }}
+              />
+            </motion.div>
+
+            {/* Etiquetas flotantes */}
+            <motion.div
+              className="absolute left-0 top-[12%] sm:left-[-2%]"
+              initial={{ opacity: 0, scale: 0.6, rotate: -12 }}
+              animate={{ opacity: 1, scale: 1, rotate: -6 }}
+              transition={{ type: "spring", stiffness: 200, damping: 14, delay: 1.1 }}
+            >
+              <div className="flex animate-float items-center gap-2 rounded-2xl bg-white px-4 py-3 text-sm font-bold text-ink shadow-[0_16px_40px_-16px_rgba(38,42,68,0.45)]">
+                <span className="grid size-8 place-items-center rounded-full bg-sky/25"><Home className="size-4" /></span>
+                A domicilio
+              </div>
+            </motion.div>
+            <motion.div
+              className="absolute bottom-[14%] right-0 sm:right-[-2%]"
+              initial={{ opacity: 0, scale: 0.6, rotate: 12 }}
+              animate={{ opacity: 1, scale: 1, rotate: 5 }}
+              transition={{ type: "spring", stiffness: 200, damping: 14, delay: 1.25 }}
+            >
+              <div className="flex animate-float-slow items-center gap-2 rounded-2xl bg-ink px-4 py-3 text-sm font-bold text-cream shadow-[0_16px_40px_-16px_rgba(38,42,68,0.7)]">
+                <span className="grid size-8 place-items-center rounded-full bg-blush text-ink"><Leaf className="size-4" /></span>
+                Sin estrés
+              </div>
+            </motion.div>
+          </div>
 
         </div>
       </section>
 
-      {/* Services */}
-      <section className="bg-white px-4 py-12">
-        <div className="max-w-6xl mx-auto text-center">
+      {/* Marquee */}
+      <div className="-rotate-1 scale-[1.02] bg-ink py-4 text-cream">
+        <div className="flex w-max animate-marquee">
+          {[0, 1].map((copy) => (
+            <div key={copy} aria-hidden={copy === 1} className="flex shrink-0 items-center">
+              {[...marqueeItems, ...marqueeItems].map((item, index) => (
+                <span key={index} className="flex items-center gap-8 pr-8 font-display text-xl sm:text-2xl">
+                  {item}
+                  <PawPrint className="size-5 text-blush" />
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
 
-          {/* Título animado desde abajo */}
-          <motion.h2
-            className="text-2xl lg:text-3xl font-semibold text-[#262a44] mb-10 font-hore"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            viewport={{ once: true }}
-          >
-            Servicio profesional de grooming móvil: <span className="italic">rápido, seguro<br className="hidden lg:block" /> y sin estrés para tu mascota</span>
-          </motion.h2>
+      {/* Beneficios */}
+      <section className="px-4 py-20 sm:px-6 lg:py-28">
+        <div className="mx-auto max-w-7xl">
+          <Reveal className="mx-auto max-w-4xl text-center">
+            <h2 className="font-display text-3xl leading-tight text-ink sm:text-4xl lg:text-5xl">
+              Servicio profesional de grooming móvil:{" "}
+              <span className="text-blush-deep">rápido, seguro y sin estrés</span> para tu mascota
+            </h2>
+          </Reveal>
 
           {/* Lista de beneficios */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left text-[#262a44] max-w-3xl mx-auto">
-            
-            {/* Cada item con fade y desplazamiento */}
-            {[
-              "Servicio a domicilio (sin traslados ni esperas).",
-              "Productos 100% seguros y naturales.",
-              "Estilistas certificados y con experiencia.",
-              "Atención personalizada para cada raza."
-            ].map((texto, index) => (
-              <motion.div
-                key={index}
-                className="flex items-start gap-3"
-                initial={{ opacity: 0, x: index % 2 === 0 ? -40 : 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.2 }}
-                viewport={{ once: true }}
-              >
-                <CircleCheckBig className="text-green-500 animate-pulse" />
-                <p className="font-semibold italic">
-                  {texto.includes("(")
-                    ? <>{texto.split("(")[0]}<span className="font-normal">({texto.split("(")[1]}</span></>
-                    : texto}
-                </p>
-              </motion.div>
+          <Stagger className="mt-14 grid grid-cols-1 divide-y divide-ink/10 border-y border-ink/10 lg:grid-cols-4 lg:divide-x lg:divide-y-0 lg:border-y-0">
+            {benefits.map(({ Icon, title, text }, index) => (
+              <StaggerItem key={title} className="group flex items-start gap-5 py-7 lg:flex-col lg:gap-0 lg:px-8 lg:py-2 lg:first:pl-0 lg:last:pr-0">
+                <div className="flex items-center gap-3 lg:w-full lg:justify-between">
+                  <Icon className="size-9 text-blush-deep transition-transform duration-500 ease-out-expo group-hover:-rotate-12 group-hover:scale-110" strokeWidth={1.75} />
+                  <span className="hidden text-sm font-bold text-ink-soft/60 lg:block">0{index + 1}</span>
+                </div>
+                <div>
+                  <h3 className="font-display text-2xl leading-tight text-ink lg:mt-6">{title}</h3>
+                  <p className="mt-1.5 text-ink-soft">{text}</p>
+                </div>
+              </StaggerItem>
             ))}
-          </div>
+          </Stagger>
         </div>
       </section>
 
-
       {/* gallery */}
-      <section id="services" className="py-12 px-4 bg-gray-50">
-          <div style={{ fontFamily: 'Hore' }} className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 container">
-            
-            {/* Servicio 1 */}
-            <div className="bg-pink-400 text-white text-center p-4 flex items-center justify-center h-40 lg:h-50 font-bold text-3xl lg:text-4xl img-animation">
-              BAÑO <br /> PREMIUM
+      <section id="services" className="px-4 pb-20 sm:px-6 lg:pb-28">
+        <div className="mx-auto max-w-7xl">
+          <Reveal className="flex flex-col items-center justify-between gap-6 sm:flex-row sm:items-end">
+            <div className="text-center sm:text-left">
+              <span className="text-sm font-bold uppercase tracking-widest text-blush-deep">Servicios</span>
+              <h2 className="mt-2 font-display text-4xl leading-none text-ink sm:text-5xl">Lo que hacemos</h2>
             </div>
-            <div className="overflow-hidden h-40 lg:h-50 img-animation">
-              <img title="mascota" src="/assets/img/gall1.webp" alt="Baño Premium" className="w-full h-full object-cover" />
-            </div>
+            <Link href="/servicios" className="btn btn-outline group px-6 py-3 text-base">
+              Ver precios
+              <ArrowRight className="size-4 transition-transform duration-300 ease-out-expo group-hover:translate-x-1.5" />
+            </Link>
+          </Reveal>
 
-            {/* Servicio 2 */}
-            <div className="bg-[#262a44] text-pink-400 text-center p-4 flex items-center justify-center h-40 lg:h-50 font-bold text-3xl lg:text-4xl img-animation">
-              LIMPIEZA <br /> Y CUIDADO
-            </div>
-            <div className="overflow-hidden h-40 lg:h-50 img-animation">
-              <img title="mascota" src="/assets/img/gall2.webp" alt="Limpieza y Cuidado" className="w-full h-full object-cover" />
-            </div>
-
-            {/* Servicio 3 */}
-            <div className="overflow-hidden h-40 lg:h-50 img-animation">
-              <img title="mascota" src="/assets/img/gall3.webp" alt="Corte y desenredo" className="w-full h-full object-cover" />
-            </div>
-            <div className="bg-[#262a44] text-pink-400 text-center p-4 flex items-center justify-center h-40 lg:h-50 font-bold text-3xl lg:text-4xl img-animation">
-              CORTE Y <br /> DESENREDO
-            </div>
-
-            {/* Servicio 4 */}
-            <div className="overflow-hidden h-40 lg:h-50 img-animation">
-              <img title="mascota" src="/assets/img/gall4.webp" alt="Tratamientos especiales" className="w-full h-full object-cover" />
-            </div>
-            <div className="bg-pink-400 text-white text-center p-4 flex items-center justify-center h-40 lg:h-50 font-bold text-3xl lg:text-4xl img-animation">
-              TRATAMIENTOS <br /> ESPECIALES
-            </div>
-
-          </div>
+          <Stagger stagger={0.12} className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+            {services.map((service, index) => (
+              <StaggerItem key={service.alt} className={index % 2 === 1 ? "lg:mt-10" : ""}>
+                <Link
+                  href="/servicios"
+                  title={service.alt}
+                  className="group relative block aspect-[3/4] overflow-hidden rounded-3xl bg-ink"
+                >
+                  <img
+                    src={service.img}
+                    alt={service.alt}
+                    loading="lazy"
+                    className="size-full object-cover transition-transform duration-[900ms] ease-out-expo group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent opacity-90 transition-opacity duration-500 group-hover:opacity-100" />
+                  <span className="absolute right-3 top-3 grid size-10 place-items-center rounded-full bg-cream text-ink transition-all duration-500 ease-out-expo group-hover:rotate-45 group-hover:bg-blush sm:right-4 sm:top-4">
+                    <ArrowUpRight className="size-5" />
+                  </span>
+                  <div className="absolute inset-x-0 bottom-0 p-4 sm:p-6">
+                    <span className="text-sm font-bold text-blush">0{index + 1}</span>
+                    <h3 className="mt-1 font-display text-xl leading-none text-cream transition-transform duration-500 ease-out-expo group-hover:-translate-y-1 sm:text-3xl">
+                      {service.title}
+                    </h3>
+                  </div>
+                </Link>
+              </StaggerItem>
+            ))}
+          </Stagger>
+        </div>
       </section>
 
       {/* Cover section */}
-      <section id="cover" className="bg-[#262a44] min-h-[500px] flex items-center justify-center px-4 py-12">
-        <div className="max-w-7xl w-full flex flex-col-reverse lg:flex-row items-center lg:items-start justify-between gap-8">
-          
-          {/* Texto animado */}
-          <motion.div
-            className="w-full lg:w-1/2 text-white text-center lg:text-left"
-            initial={{ opacity: 0, x: -60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            viewport={{ once: true }}
-          >
-            <h1
-              style={{ fontFamily: 'Hore' }}
-              className="text-4xl lg:text-5xl font-extrabold leading-tight mt-6"
-            >
-              ¡Servicio a <span className="text-pink-400">la puerta</span> <br />
-              de tu casa!<br />
-              <span className="text-white">¿No estás en la zona?</span> <br />
-              <span className="text-white text-2xl">¡Contáctanos para excepciones!</span>
-            </h1>
-          </motion.div>
-
-          {/* Mapa animado */}
-          <motion.div
-            className="w-full lg:w-1/2 h-[300px] sm:h-[400px] lg:h-[500px] rounded-xl overflow-hidden shadow-lg"
-            initial={{ opacity: 0, x: 60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2020.3259283400287!2d-106.42484420041754!3d23.207839121179465!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2smx!4v1752619849851!5m2!1ses!2smx"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen={true}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
-          </motion.div>
-
-        </div>
-      </section>
-
-      {/* banner */}
-      {/* <div className="bg-[#E072A4] flex items-center justify-center">
-        <div className="py-12">
-          <a
-            href=""
-            className="inline-flex items-center bg-[#262a44] text-white font-bold px-12 py-3 rounded-full text-2xl lg:text-3xl shadow-md hover:bg-blue-900 transition"
-            style={{ fontFamily: 'Hore' }}
-          >
-            <span  className="mr-2">🐾</span> ¡Reserva fácil!
-          </a>
-        </div>
-
-      </div> */}
+      <Coverage />
 
       {/* Formulario de reservación */}
       <ReservationForm />
-
 
     </div>
   )
