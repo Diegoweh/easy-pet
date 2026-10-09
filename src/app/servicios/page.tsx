@@ -1,5 +1,5 @@
 'use client'
-import Coverage from '@/components/layout/Coverage'
+import Local from '@/components/layout/Local'
 import ReservationForm from '@/components/layout/ReservationForm'
 import { EASE, Reveal, Stagger, StaggerItem } from '@/components/motion/Reveal'
 import { motion } from 'framer-motion'
@@ -257,8 +257,8 @@ const page = () => {
 
     </section>
 
-    {/* Cover section */}
-    <Coverage />
+    {/* Nuevo local */}
+    <Local />
 
     {/* Formulario de reservación */}
     <ReservationForm />

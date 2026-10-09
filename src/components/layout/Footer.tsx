@@ -1,5 +1,5 @@
 'use client'
-import { Facebook, Instagram, MessageCircle } from 'lucide-react'
+import { Facebook, Instagram, MapPin, MessageCircle } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 import { Reveal } from '../motion/Reveal'
@@ -28,9 +28,13 @@ export function Footer() {
               />
               <nav className="flex gap-6 font-semibold text-cream/70">
                 <Link href="/servicios" className="transition-colors hover:text-blush">Servicios</Link>
-                <Link href="#cover" className="transition-colors hover:text-blush">Cobertura</Link>
+                <Link href="#local" className="transition-colors hover:text-blush">Local</Link>
                 <Link href="#reserva" className="transition-colors hover:text-blush">Reserva</Link>
               </nav>
+              <Link href="#local" className="flex items-start gap-2 text-sm text-cream/60 transition-colors hover:text-blush">
+                <MapPin className="mt-0.5 size-4 shrink-0" />
+                Av. Paseo del Atlántico #4425, Real del Valle, Mazatlán, Sin.
+              </Link>
             </div>
 
             {/* Redes sociales */}

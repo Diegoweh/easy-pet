@@ -1,6 +1,6 @@
 'use client'
 
-import Coverage from "@/components/layout/Coverage"
+import Local from "@/components/layout/Local"
 import ReservationForm from "@/components/layout/ReservationForm"
 import { EASE, Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal"
 import { motion, useScroll, useTransform } from "framer-motion"
@@ -28,7 +28,7 @@ const services = [
   { title: <>Tratamientos <br /> especiales</>, alt: "Tratamientos especiales", img: "/assets/img/gall4.webp" },
 ]
 
-const marqueeItems = ["Baño premium", "Limpieza y cuidado", "Corte y desenredo", "Tratamientos especiales", "A domicilio"]
+const marqueeItems = ["Baño premium", "Limpieza y cuidado", "Corte y desenredo", "Tratamientos especiales", "A domicilio", "Juego en el local", "Ejercicio", "Recolección"]
 
 export default function ComingSoonPage() {
   const heroRef = useRef<HTMLElement>(null)
@@ -259,8 +259,8 @@ export default function ComingSoonPage() {
         </div>
       </section>
 
-      {/* Cover section */}
-      <Coverage />
+      {/* Nuevo local */}
+      <Local />
 
       {/* Formulario de reservación */}
       <ReservationForm />

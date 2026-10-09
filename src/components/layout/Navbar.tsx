@@ -7,7 +7,7 @@ import { EASE } from '../motion/Reveal'
 
 const links = [
   { href: '/servicios', label: 'Servicios' },
-  { href: '#cover', label: 'Cobertura' },
+  { href: '#local', label: 'Local' },
 ]
 
 export function Navbar() {
